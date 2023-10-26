@@ -1,6 +1,7 @@
+import socket
+from .packet import Packet
 from typing import Optional
 from .message_queue import MessageQueue
-from .packet import Packet
 
 class NetworkNode:
     
@@ -18,4 +19,8 @@ class NetworkNode:
         
         
     def send_message(self, target: str, content: Packet):
-        pass
+        
+        if self.has_token:
+            return True
+        else:
+            return False
