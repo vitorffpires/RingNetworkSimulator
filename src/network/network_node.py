@@ -15,4 +15,6 @@ class NetworkNode:
         self.has_token = has_token
         self.message_queue = MessageQueue()
         
-    
+        
+    def send_message(target: str, content: str):
+        pass
