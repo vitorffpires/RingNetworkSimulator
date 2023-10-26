@@ -1,5 +1,6 @@
 from typing import Optional
 from .message_queue import MessageQueue
+from .packet import Packet
 
 class NetworkNode:
     
@@ -16,5 +17,5 @@ class NetworkNode:
         self.message_queue = MessageQueue()
         
         
-    def send_message(target: str, content: str):
+    def send_message(self, target: str, content: Packet):
         pass
