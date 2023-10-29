@@ -3,6 +3,8 @@ from .packet import Packet
 class TokenPacket(Packet):
     
     def __init__(self) -> None:
-        self.id = 1000
+        super().__init__("1000")
+        self.header = self.create_header()
         
-    
+    def create_header(self):
+        return f"{self.id}"
