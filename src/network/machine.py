@@ -35,9 +35,6 @@ class Machine:
             packet = DataPacket.create_header_from_string(data.decode())
             
         return self.process_packet(packet)
-<<<<<<< Updated upstream
-        
-=======
     
     def configure_machine(file_path: str) -> 'Machine':
         with open(file_path, 'r') as f:
@@ -49,7 +46,6 @@ class Machine:
         machine = Machine(ip_port, nickname, time_token, token)
         return machine
 
->>>>>>> Stashed changes
     @classmethod
     def get_ip(cls, ip: str):
         return ip.split(":")[0]
@@ -60,35 +56,13 @@ class Machine:
     
     def close_socket(self):
         self.socket.close()
-<<<<<<< Updated upstream
-=======
-
-    def calculate_crc(self, message: str):
-        # TODO implement the method
-        pass
->>>>>>> Stashed changes
         
     def process_packet(self, packet: Packet):
         if packet.id == "1000":
             self.has_token = True
         elif packet.id == "2000":
             if packet.destination_name == self.nickname:
-<<<<<<< Updated upstream
-                # calcula crc
-                # imprime log
-                # altera o estado (ack para crc ok, nack para crc errado)
-                # manda de volta 
-                pass
-            elif packet.origin_name == self.nickname:
-                # ler estado 
-                # se náo achou a maquina: tira msg da fila, passa o token, printa log 
-                # se teve erro: printa log, passa o token e mantém a msg na fila
-                # ack: printa log, passa o token e tira a msg da fila
-                pass
-            else:
-                # passa para o próximo
-=======
-                crc = self.calculate_crc(packet.message)
+                crc = packet.calculate_crc(packet.message)
                 if crc == packet.crc:
                     print(f"Message from {packet.origin_name}: {packet.message}")
                     packet.error_control = 'ACK'
@@ -108,5 +82,4 @@ class Machine:
                     self.send_packet(packet=Packet('1000'))
                     print('Message sent successfully')
             else:
->>>>>>> Stashed changes
                 self.send_packet(packet)
