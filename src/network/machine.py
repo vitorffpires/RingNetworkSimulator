@@ -22,7 +22,17 @@ class Machine:
         
     def add_packet_to_queue(self, packet: Packet):
         self.message_queue.append(packet)
-        
+
+    def get_packet_from_queue(self):
+        if self.has_token:
+            return self.message_queue.pop(0)
+        else:
+            return None
+
+    def insert_error(self):
+        # TODO implement the class to insert sintetic errors
+        pass 
+
     def send_packet(self, packet: Packet):
         self.socket.sendto(packet.header.encode(), (self.ip, self.port))
         
@@ -60,6 +70,11 @@ class Machine:
     def process_packet(self, packet: Packet):
         if packet.id == "1000":
             self.has_token = True
+            message = self.get_packet_from_queue()
+            if message is not None:
+                self.send_packet(message)
+            else:
+                self.send_packet(TokenPacket())
         elif packet.id == "2000":
             if packet.destination_name == self.nickname:
                 crc = packet.calculate_crc(packet.message)
